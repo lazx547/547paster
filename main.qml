@@ -1,6 +1,9 @@
 import QtQuick
+import GFile 1.2
 
 Item {
-    property var $reload:Load{}
+    property var $load:Load{}
+    property var $file:GFile{}
     property var $sysTRay:SysTray{}
+    property var $menu
 }

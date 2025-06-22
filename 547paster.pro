@@ -60,7 +60,6 @@ DISTFILES += \
     build/Desktop_Qt_6_8_3_MinGW_64_bit-Debug/file/ProgreBar.qml \
     build/Desktop_Qt_6_8_3_MinGW_64_bit-Debug/file/SysTray.qml \
     build/Desktop_Qt_6_8_3_MinGW_64_bit-Debug/file/main.qml \
-    build/Desktop_Qt_6_8_3_MinGW_64_bit-Debug/file/main_win.qml \
     main.qml
 
 VERSION = 0.9

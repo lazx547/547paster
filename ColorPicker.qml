@@ -17,6 +17,8 @@ Window {
         alpScroll.setValue(a_)
     }
     color: "#00000000"
+    property color color_
+    property color color__
     flags: Qt.FramelessWindowHint|Qt.WindowStaysOnTopHint
     onActiveFocusItemChanged: {//失去焦点时隐藏
         if(!activeFocusItem)
@@ -29,8 +31,7 @@ Window {
 
 
     Rectangle{
-        border.width: 2
-        border.color: "#80808080"
+        color: color_
         anchors.fill: parent
     }
 
@@ -41,7 +42,7 @@ Window {
         property point offsetPos: Qt.point(0, 0)
         Rectangle {
             anchors.fill: parent
-            color: "#f6f6f6"
+            color: "#88f6f6f6"
         }
         Item{
             x:122
@@ -87,6 +88,7 @@ Window {
                 Text{
                     anchors.fill: parent
                     id:vr
+                    color:color__
                     text:"R:"+(redSlider.value * 255).toFixed(0);
                     font.pixelSize: 14
                     horizontalAlignment:Text.AlignHCenter
@@ -132,6 +134,7 @@ Window {
                 Text{
                     anchors.fill: parent
                     id:va
+                    color:color__
                     text:"A:"+(alpSlider.value * 255).toFixed(0);
                     font.pixelSize: 14
                     horizontalAlignment:Text.AlignHCenter
@@ -153,6 +156,7 @@ Window {
                 topPadding:0
                 bottomPadding: 0
                 text: "<"
+                color_:color__
                 onClicked: redScroll.setValue(redSlider.value-1/256)
                 toolTipText: "减小"
             }
@@ -165,6 +169,7 @@ Window {
                 topPadding:0
                 bottomPadding: 0
                 text: ">"
+                color_:color__
                 onClicked: redScroll.setValue(redSlider.value+1/256)
                 toolTipText: "增大"
             }
@@ -223,6 +228,7 @@ Window {
                 topPadding:0
                 bottomPadding: 0
                 text: "<"
+                color_:color__
                 onClicked: greScroll.setValue(greSlider.value-1/256)
                 toolTipText: "减小"
             }
@@ -235,6 +241,7 @@ Window {
                 topPadding:0
                 bottomPadding: 0
                 text: ">"
+                color_:color__
                 onClicked: greScroll.setValue(greSlider.value+1/256)
                 toolTipText: "增大"
             }
@@ -293,6 +300,7 @@ Window {
                 topPadding:0
                 bottomPadding: 0
                 text: "<"
+                color_:color__
                 onClicked: bluScroll.setValue(bluSlider.value-1/256)
                 toolTipText: "减小"
             }
@@ -305,6 +313,7 @@ Window {
                 topPadding:0
                 bottomPadding: 0
                 text: ">"
+                color_:color__
                 onClicked: bluScroll.setValue(bluSlider.value+1/256)
                 toolTipText: "增大"
             }
@@ -360,6 +369,7 @@ Window {
                 topPadding:0
                 bottomPadding: 0
                 text: "<"
+                color_:color__
                 onClicked: alpScroll.setValue(alpSlider.value-1/256)
                 toolTipText: "减小"
             }
@@ -372,6 +382,7 @@ Window {
                 topPadding:0
                 bottomPadding: 0
                 text: ">"
+                color_:color__
                 onClicked: alpScroll.setValue(alpSlider.value+1/256)
                 toolTipText: "增大"
             }

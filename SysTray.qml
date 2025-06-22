@@ -1,18 +1,30 @@
 import QtQuick
-import Qt.labs.platform
-
-SystemTrayIcon {//托盘图标
-    visible: true
-    icon.source: "qrc:/547clock.png"
-    id:tray
-    onActivated:(reason)=>{
-        if(reason==SystemTrayIcon.Trigger)
-        {
-            $reload.show()
+import Qt.labs.platform 1.1
+import QtQuick.Controls
+Window{
+    x:-100
+    y:-100
+    width: 0
+    height:0
+    SystemTrayIcon {//托盘图标
+        id:root
+        visible: true
+        icon.source: "qrc:/images/sys_Tray.png"
+        onActivated:(reason)=>{
+                        if (reason === SystemTrayIcon.Context) {
+                            menu.open()
+                        } else {
+                            $load.create()
+                        }
+                    }
+        menu:Menu{
+            id:menu
+            MenuItem{
+                text: "退出"
+                onTriggered: Qt.quit()
+            }
         }
-        else if(reason==SystemTrayIcon.DoubleClick)
-        {
-            $reload.setVisible()
-        }
+        Component.onCompleted: $menu=menu
     }
 }
+
