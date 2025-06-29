@@ -1,12 +1,15 @@
 import QtQuick
 import QtQuick.Controls
 import GFile 1.2
+import Clipboard 1.0
 
 Item {
     property var paster:Qt.createComponent("./Paster.qml")
     property var menuItem:Qt.createComponent("./PMenuItem.qml")
     property var objs:[]
     function create(){
+        if(Clipboard.pasteText()=="")
+            return
         objs.push(paster.createObject())
         var n=objs.length-1
         objs[n].thisn=n

@@ -14,10 +14,10 @@ Window {
     flags: Qt.FramelessWindowHint|Qt.WindowStaysOnTopHint
     color: "#00000000"
     visible: false
-
+    
     readonly property real sys_width: window.screen.width
     readonly property real sys_height: window.screen.height
-    property int bw: 3
+    property int bw: border_size>3?border_size:3
     property int dragX: 0
     property int dragY: 0
     property bool dragging: false
@@ -39,211 +39,210 @@ Window {
         family: "微软雅黑"
         bold: false
     }
-
+    
     onTopChanged: {
         flags=top?Qt.FramelessWindowHint|Qt.WindowStaysOnTopHint:Qt.FramelessWindowHint
     }
-
+    
     function read(){
         if($file.is("./data.ini"))
         {
             $file.source=path
             var s=$file.read(),r_,g_,b_,a_
-            r_=s.slice(0,s.indexOf(","))
-            s=s.slice(s.indexOf(",")+1,s.length)
-            g_=s.slice(0,s.indexOf(","))
-            s=s.slice(s.indexOf(",")+1,s.length)
-            b_=s.slice(0,s.indexOf(","))
-            s=s.slice(s.indexOf(",")+1,s.length)
-            a_=s.slice(0,s.indexOf(","))
-            s=s.slice(s.indexOf(",")+1,s.length)
-            font_color=Qt.rgba(r_,g_,b_,a_)
-            r_=s.slice(0,s.indexOf(","))
-            s=s.slice(s.indexOf(",")+1,s.length)
-            g_=s.slice(0,s.indexOf(","))
-            s=s.slice(s.indexOf(",")+1,s.length)
-            b_=s.slice(0,s.indexOf(","))
-            s=s.slice(s.indexOf(",")+1,s.length)
-            a_=s.slice(0,s.indexOf(","))
-            s=s.slice(s.indexOf(",")+1,s.length)
-            back_color=Qt.rgba(r_,g_,b_,a_)
-            font_.pixelSize=Number(s.slice(0,s.indexOf(",")))
-            s=s.slice(s.indexOf(",")+1,s.length)
-            font_.family=s.slice(0,s.indexOf(","))
-            s=s.slice(s.indexOf(",")+1,s.length)
             window.width=s.slice(0,s.indexOf(","))
-            s=s.slice(s.indexOf(",")+1,s.length)
+            s=s.slice(s.indexOf(",")+1,s.length)//,
             window.height=s.slice(0,s.indexOf(","))
-            s=s.slice(s.indexOf(",")+1,s.length)
-            font_.bord=s.slice(0,s.indexOf(","))=="true"?true:false
+            s=s.slice(s.indexOf(",")+1,s.length)//,
+            window_opacity.setValue(s.slice(0,s.indexOf(",")))
+            s=s.slice(s.indexOf(",")+1,s.length)//,
+            s=s.slice(s.indexOf(",")+1,s.length)//,
+            r_=s.slice(0,s.indexOf(","))
+            s=s.slice(s.indexOf(",")+1,s.length)//,
+            g_=s.slice(0,s.indexOf(","))
+            s=s.slice(s.indexOf(",")+1,s.length)//,
+            b_=s.slice(0,s.indexOf(","))
+            s=s.slice(s.indexOf(",")+1,s.length)//,
+            a_=s.slice(0,s.indexOf(","))
+            font_color_picker.setColor(r_,g_,b_,a_)
+            s=s.slice(s.indexOf(",")+1,s.length)//,
+            s=s.slice(s.indexOf(",")+1,s.length)//,
+            r_=s.slice(0,s.indexOf(","))
+            s=s.slice(s.indexOf(",")+1,s.length)//,
+            g_=s.slice(0,s.indexOf(","))
+            s=s.slice(s.indexOf(",")+1,s.length)//,
+            b_=s.slice(0,s.indexOf(","))
+            s=s.slice(s.indexOf(",")+1,s.length)//,
+            a_=s.slice(0,s.indexOf(","))
+            back_color_picker.setColor(r_,g_,b_,a_)
+            s=s.slice(s.indexOf(",")+1,s.length)//,
+            s=s.slice(s.indexOf(",")+1,s.length)//,
+            r_=s.slice(0,s.indexOf(","))
+            s=s.slice(s.indexOf(",")+1,s.length)//,
+            g_=s.slice(0,s.indexOf(","))
+            s=s.slice(s.indexOf(",")+1,s.length)//,
+            b_=s.slice(0,s.indexOf(","))
+            s=s.slice(s.indexOf(",")+1,s.length)//,
+            a_=s.slice(0,s.indexOf(","))
+            border_color_picker.setColor(r_,g_,b_,a_)
+            s=s.slice(s.indexOf(",")+1,s.length)//,
+            s=s.slice(s.indexOf(",")+1,s.length)//,
+            border_size.setValue(s.slice(0,s.indexOf(",")))
+            s=s.slice(s.indexOf(",")+1,s.length)//,
+            s=s.slice(s.indexOf(",")+1,s.length)//,
+            font_size.setValue(s.slice(0,s.indexOf(",")))
+            s=s.slice(s.indexOf(",")+1,s.length)//,
+            s=s.slice(s.indexOf(",")+1,s.length)//,
+            font_bord.checked=s.slice(0,s.indexOf(","))=="true"?true:false
+            s=s.slice(s.indexOf(",")+1,s.length)//,
+            s=s.slice(s.indexOf(",")+1,s.length)//,
+            font_center.checked=s.slice(0,s.indexOf(","))=="true"?true:false
+            s=s.slice(s.indexOf(",")+1,s.length)//,
+            s=s.slice(s.indexOf(",")+1,s.length)//,
+            font_.family=s.slice(0,s.indexOf(","))
         }
         else
         {
             sfont.family="微软雅黑"
         }
+        //resize()
     }
 
+    function resize(){
+        t_text.text=text__.text=text_.text=Clipboard.pasteText()
+        var a=window.width
+        window.width=t_text.contentWidth+bw*2
+        if(window.width>sys_width)
+        {
+            window.width=a
+            window.height=text_.contentHeight+bw*2
+        }
+        window.height=t_text.contentHeight+bw*2
+    }
+    
     onThisnChanged: {
         text__.text=text_.text=Clipboard.pasteText()
-        menu_.visible=false
-        text__.visible=false
         read()
         window.visible=true
     }
-    onPathChanged: {
-        if($file.is(path))
-        {
-
-            $file.source=path
-            var s=$file.read(),r_,g_,b_,a_
-            r_=s.slice(0,s.indexOf(","))
-            s=s.slice(s.indexOf(",")+1,s.length)
-            g_=s.slice(0,s.indexOf(","))
-            s=s.slice(s.indexOf(",")+1,s.length)
-            b_=s.slice(0,s.indexOf(","))
-            s=s.slice(s.indexOf(",")+1,s.length)
-            a_=s.slice(0,s.indexOf(","))
-            s=s.slice(s.indexOf(",")+1,s.length)
-            font_color=Qt.rgba(r_,g_,b_,a_)
-            r_=s.slice(0,s.indexOf(","))
-            s=s.slice(s.indexOf(",")+1,s.length)
-            g_=s.slice(0,s.indexOf(","))
-            s=s.slice(s.indexOf(",")+1,s.length)
-            b_=s.slice(0,s.indexOf(","))
-            s=s.slice(s.indexOf(",")+1,s.length)
-            a_=s.slice(0,s.indexOf(","))
-            s=s.slice(s.indexOf(",")+1,s.length)
-            back_color=Qt.rgba(r_,g_,b_,a_)
-            font_.pixelSize=Number(s.slice(0,s.indexOf(",")))
-            s=s.slice(s.indexOf(",")+1,s.length)
-            font_.family=s.slice(0,s.indexOf(","))
-            s=s.slice(s.indexOf(",")+1,s.length)
-            window.width=s.slice(0,s.indexOf(","))
-            s=s.slice(s.indexOf(",")+1,s.length)
-            window.height=s.slice(0,s.indexOf(","))
-            s=s.slice(s.indexOf(",")+1,s.length)
-            font_.bord=s.slice(0,s.indexOf(","))=="true"?true:false
-        }
-    }
-
     function save(){
-            var a=font_color_picker.r.toString()+","+font_color_picker.g.toString()+","+font_color_picker.b.toString()+","+font_color_picker.a.toString()+","
-            a+=back_color_picker.r.toString()+","+back_color_picker.g.toString()+","+back_color_picker.b.toString()+","+back_color_picker.a.toString()+","
-            a+=font_.pixelSize.toString()+","
-            a+=font_.family+","
-            a+=window.width+","
-            a+=window.height+","
-            a+=font_.bold+","
-            a+=","
-            $file.source="./data.ini"
-            $file.write(a)
+        var a=window.width+","
+        a+=window.height+","
+        a+=window_opacity.value+",fc:,"
+        a+=font_color_picker.r.toString()+","+font_color_picker.g.toString()+","+font_color_picker.b.toString()+","+font_color_picker.a.toString()+",bc:,"
+        a+=back_color_picker.r.toString()+","+back_color_picker.g.toString()+","+back_color_picker.b.toString()+","+back_color_picker.a.toString()+",bc:,"
+        a+=border_color_picker.r.toString()+","+border_color_picker.g.toString()+","+border_color_picker.b.toString()+","+border_color_picker.a.toString()+",bs:,"
+        a+=border_size.value.toString()+",fs:,"
+        a+=font_size.value+",fb:,"
+        a+=font_bord.checked+",fc:,"
+        a+=font_center.seleted+",ff:,"
+        a+=font_.family+","
+        $file.source="./data.ini"
+        $file.write(a)
     }
+    Rectangle{/*
+        Text{
+            visible: false
+            id:t_text
+            wrapMode: Text.NoWrap
+            font:font_
+        }*/
 
-    MouseArea {
-        anchors.fill: parent
-        hoverEnabled: true
-        z:2
-        cursorShape: {
-            const p = Qt.point(mouseX, mouseY);
-            const b = bw; // Increase the corner size slightly
-            if (p.x < b && p.y < b) return Qt.SizeFDiagCursor;
-            if (p.x >= width - b && p.y >= height - b) return Qt.SizeFDiagCursor;
-            if (p.x >= width - b && p.y < b) return Qt.SizeBDiagCursor;
-            if (p.x < b && p.y >= height - b) return Qt.SizeBDiagCursor;
-            if (p.x < b || p.x >= width - b) return Qt.SizeHorCursor;
-            if (p.y < b || p.y >= height - b) return Qt.SizeVerCursor;
-        }
-        acceptedButtons: Qt.LeftButton|Qt.RightButton
-
-        onPressed: (mouse)=>{
-                       if(!lock){
-                           const p = mouse
-                           const b = bw; // Increase the corner size slightly
-                           let e = 0;
-                           if (mouse.x < b) { e = Qt.LeftEdge }
-                           if (mouse.x >= width - b) { e = Qt.RightEdge }
-                           if (mouse.y < b) { e = Qt.TopEdge }
-                           if (mouse.y >= height - b) { e = Qt.BottomEdge }
-                           if(e==0)
-                           {
-                               dragX = mouseX
-                               dragY = mouseY
-                               dragging = true
-                               x0=window.x
-                               y0=window.y
-                           }
-                           else
-                           window.startSystemResize(e);
-                       }
-                   }
-        onReleased: (mouse)=>{
-            dragging = false
-            if(window.x==x0 && window.y==y0 && mouse.button==Qt.RightButton)
-            {
-                menu_.x=window.x+mouseX
-                menu_.y=window.y+mouseY
-                if(menu_.x+menu_.width>sys_width) menu_.x-=menu_.width
-                if(menu_.y+menu_.height>sys_height) menu_.y-=menu_.height
-                menu_.visible=true
-            }
-
-        }
-        onPositionChanged: {
-            if (dragging) {
-                window.x += mouseX - dragX
-                window.y += mouseY - dragY
-            }
-        }
-
-    }
-
-    Rectangle{
         id:win
         anchors.fill: parent
         color:back_color
         border.color: border_color
         border.width: custom.visible?(border_width==0 ?3:border_width):border_width
+        MouseArea {
+            anchors.fill: parent
+            hoverEnabled: true
+            z:2
+            cursorShape: {
+                const p = Qt.point(mouseX, mouseY);
+                const b = bw; // Increase the corner size slightly
+                if (p.x < b && p.y < b) return Qt.SizeFDiagCursor;
+                if (p.x >= width - b && p.y >= height - b) return Qt.SizeFDiagCursor;
+                if (p.x >= width - b && p.y < b) return Qt.SizeBDiagCursor;
+                if (p.x < b && p.y >= height - b) return Qt.SizeBDiagCursor;
+                if (p.x < b || p.x >= width - b) return Qt.SizeHorCursor;
+                if (p.y < b || p.y >= height - b) return Qt.SizeVerCursor;
+            }
+            acceptedButtons: Qt.LeftButton|Qt.RightButton
+
+            onPressed: (mouse)=>{
+                           if(!lock){
+                               const p = mouse
+                               const b = bw; // Increase the corner size slightly
+                               let e = 0;
+                               if (mouse.x < b) { e = Qt.LeftEdge }
+                               if (mouse.x >= width - b) { e = Qt.RightEdge }
+                               if (mouse.y < b) { e = Qt.TopEdge }
+                               if (mouse.y >= height - b) { e = Qt.BottomEdge }
+                               if(e==0)
+                               {
+                                   dragX = mouseX
+                                   dragY = mouseY
+                                   dragging = true
+                                   x0=window.x
+                                   y0=window.y
+                               }
+                               else if(mouse.button!=Qt.RightButton)
+                               window.startSystemResize(e);
+                           }
+                       }
+            onReleased: (mouse)=>{
+                            dragging = false
+                            if(window.x==x0 && window.y==y0 && mouse.button==Qt.RightButton)
+                            {
+                                menu_.x=window.x+mouseX
+                                menu_.y=window.y+mouseY
+                                if(menu_.x+menu_.width>sys_width) menu_.x-=menu_.width
+                                if(menu_.y+menu_.height>sys_height) menu_.y-=menu_.height
+                                menu_.visible=true
+                            }
+
+                        }
+            onPositionChanged: {
+                if (dragging) {
+                    window.x += mouseX - dragX
+                    window.y += mouseY - dragY
+                }
+            }
+        }
+
+        TextArea{
+            z:3
+            x:border_width
+            y:border_width
+            width: window.width-2*border_width
+            height: window.height-2*border_width
+            visible: custom.visible
+            id:text__
+            color:font_color
+            horizontalAlignment: Text.AlignHCenter
+            font:font_
+            wrapMode: Text.Wrap
+            padding: 0
+            leftPadding: 0
+            rightPadding: 0
+            clip: true
+        }
         Item{
-            TextArea{
-                id:text__
+            x:border_width
+            y:border_width
+            width: window.width-2*border_width
+            height: window.height-2*border_width
+            Text{
+                id:text_
+                anchors.fill: parent
                 color:font_color
                 visible: !custom.visible
                 horizontalAlignment: Text.AlignHCenter
-                x:edgeThreshold
-                y:edgeThreshold
-                width: window.width-2*edgeThreshold
-                height: window.height-20-2*edgeThreshold
-                wrapMode: Text.Wrap
-                padding: 0
-                leftPadding: 0
-                rightPadding: 0
                 font:font_
-                onVisibleChanged: {
-                    if(visible)
-                    {
-                        text=text_.text
-                    }
-                    else
-                    {
-                        text_.text=text
-                    }
-                }
-            }
-            Text{
-                x:edgeThreshold
-                y:edgeThreshold
-                color:font_color
-                font:font_
-                horizontalAlignment: Text.AlignHCenter
-                width: window.width-2*edgeThreshold
-                height: window.height-20-2*edgeThreshold
-                id:text_
                 wrapMode: Text.Wrap
+                clip: true
             }
         }
     }
-
-
     Window{//右键菜单窗口
         id:menu_
         visible:false
@@ -319,7 +318,6 @@ Window {
                         menu_.visible=false
                         custom.unChecked()
                         custom.visible=false
-                        mouse_area.custon_show=false
                     }
                     else
                     {
@@ -334,18 +332,18 @@ Window {
                 y:top_set.height*3
                 type:1
                 width: parent.width
-                text:"粘贴"
+                text:"复制"
                 onClicked: {
-                    text__.text=text_.text=Clipboard.pasteText()
+                    Clipboard.copyText(text__.text)
                 }
             }
             Cbutton{
                 y:top_set.height*4
                 type:1
                 width: parent.width
-                text:"复制"
+                text:"粘贴"
                 onClicked: {
-                    Clipboard.copyText(text__.text)
+                    text__.text=text_.text=Clipboard.pasteText()
                 }
             }
             /*
@@ -380,7 +378,7 @@ Window {
                     $load.exit(thisn)
                 }
             }
-        }
+        }/*
         Item {
             id: saves_window
             width: 143+saves_scoll.effectiveScrollBarWidth/2
@@ -489,7 +487,7 @@ Window {
                         file.write(s)
                     }
                 }
-
+                
                 Component.onCompleted: {
                     file.source="./file/saves/num.txt"
                     var s=file.read()
@@ -510,8 +508,7 @@ Window {
                 }
             }
         }
-    }
-
+    */}
     Window{
         id:custom
         visible:false
@@ -523,6 +520,12 @@ Window {
         property var buttons:[]
         property int detect_height:50
         property bool show_above:false
+        onVisibleChanged: {
+            if(visible)
+                text__.text=text_.text
+            else
+                text_.text=text__.text
+        }
 
         Component.onCompleted: {
             buttons.push(opacity_button)
@@ -599,7 +602,7 @@ Window {
                     custom.unChecked()
                     checked=true
                 }
-
+                
                 seleted: checked
                 img:"./images/opacity.png"
                 Window{
@@ -658,9 +661,19 @@ Window {
                         color:"#f2f2f2"
                         border.color: window.topic_color
                     }
+                    ComboBox {
+                        id: font_combo
+                        x:3
+                        y:1
+                        height: 20
+                        transformOrigin: Item.TopLeft
+                        model: Qt.fontFamilies()
+                        currentIndex: model.indexOf(window.font_.family)
+                        onActivated: window.font_.family = currentText
+                    }
                     Cbutton{
                         id:font_bord
-                        x:1
+                        x:191
                         y:1
                         width: 20
                         height: 20
@@ -672,11 +685,29 @@ Window {
                         onCheckedChanged: window.font_.bold=checked
                     }
 
+                    Cbutton{
+                        id:font_center
+                        x:171
+                        y:1
+                        width: 20
+                        height: 20
+                        type:2
+                        img:"./images/center.png"
+                        font.bold: true
+                        checkable: true
+                        seleted: checked
+                        onCheckedChanged: {
+                            if(seleted)
+                                text_.horizontalAlignment=text__.horizontalAlignment=Text.AlignLeft
+                            else
+                                text_.horizontalAlignment=text__.horizontalAlignment=Text.AlignHCenter
+                        }
+                    }
                     CscrollBar{
                         id:font_size
-                        x:23
-                        y:3
-                        width: 189
+                        x:3
+                        y:103
+                        width: 207
                         height: 16
                         text: "大小"
                         text_width: 30
@@ -691,16 +722,6 @@ Window {
                         x:3
                         onColor_Changed: window.font_color=color_
                     }
-                    ComboBox {
-                        id: font_combo
-                        x:3
-                        y:100
-                        height: 20
-                        transformOrigin: Item.TopLeft
-                        model: Qt.fontFamilies()
-                        currentIndex: model.indexOf(window.font_.family)
-                        onActivated: window.font_.family = currentText
-                    }
                 }
             }
             Cbutton{
@@ -713,7 +734,7 @@ Window {
                     custom.unChecked()
                     checked=true
                 }
-
+                
                 seleted: checked
                 img:"./images/border.png"
                 Window{
@@ -740,7 +761,7 @@ Window {
                         text: "边框大小"
                         text_width: 60
                         minValue: 0
-                        maxValue: window.height/4+1
+                        maxValue: 20
                         Component.onCompleted: setValue(0)
                         onValueChanged: window.border_width=value
                     }
@@ -789,6 +810,23 @@ Window {
                 }
             }
             Cbutton{
+                x:130
+                type:2
+                width: 25
+                height: 25
+                onClicked: Clipboard.copyText(text__.text)
+
+                img:"./images/copy.png"
+            }
+            Cbutton{
+                x:160
+                type:2
+                width: 25
+                height: 25
+                onClicked: text__.text=text_.text=Clipboard.pasteText()
+                img:"./images/paste.png"
+            }
+            Cbutton{
                 x:parent.width-25
                 type:2
                 width: 25
@@ -799,7 +837,6 @@ Window {
                     custom.unChecked()
                     save()
                 }
-
                 img:"./images/check.png"
             }
         }
@@ -813,5 +850,5 @@ Window {
             }
         }
     }
-
+    
 }

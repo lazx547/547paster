@@ -40,26 +40,20 @@ HEADERS += \
     gfile.h
 
 DISTFILES += \
+    About.qml \
+    CSaveItem.qml \
     Cbutton.qml \
     Ccheckbox.qml \
     ColorPicker.qml \
+    ColorPickerItem.qml \
     CscrollBar.qml \
     ImaButton.qml \
+    Load.qml \
     Movetool.qml \
-    build/Desktop_Qt_6_8_3_MinGW_64_bit-Debug/file/About.qml \
-    build/Desktop_Qt_6_8_3_MinGW_64_bit-Debug/file/CSaveItem.qml \
-    build/Desktop_Qt_6_8_3_MinGW_64_bit-Debug/file/Cbutton.qml \
-    build/Desktop_Qt_6_8_3_MinGW_64_bit-Debug/file/Ccheckbox.qml \
-    build/Desktop_Qt_6_8_3_MinGW_64_bit-Debug/file/ColorPicker.qml \
-    build/Desktop_Qt_6_8_3_MinGW_64_bit-Debug/file/ColorPickerItem.qml \
-    build/Desktop_Qt_6_8_3_MinGW_64_bit-Debug/file/CscrollBar.qml \
-    build/Desktop_Qt_6_8_3_MinGW_64_bit-Debug/file/ImaButton.qml \
-    build/Desktop_Qt_6_8_3_MinGW_64_bit-Debug/file/Load.qml \
-    build/Desktop_Qt_6_8_3_MinGW_64_bit-Debug/file/PMenuItem.qml \
-    build/Desktop_Qt_6_8_3_MinGW_64_bit-Debug/file/Paster.qml \
-    build/Desktop_Qt_6_8_3_MinGW_64_bit-Debug/file/ProgreBar.qml \
-    build/Desktop_Qt_6_8_3_MinGW_64_bit-Debug/file/SysTray.qml \
-    build/Desktop_Qt_6_8_3_MinGW_64_bit-Debug/file/main.qml \
-    main.qml
+    PMenuItem.qml \
+    Paster.qml \
+    ProgreBar.qml \
+    SysTray.qml \
+    main.qml \
 
 VERSION = 0.9
